@@ -28,14 +28,30 @@ type WorkloadPlacementPolicySpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 
-	// Foo is an example field of WorkloadPlacementPolicy. Edit workloadplacementpolicy_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+	OriginRegion  Region `json:"originRegion"`
+	MaxLatency    int    `json:"maxLatency"`
+	CloudProvider string `json:"cloudProvider"`
+}
+
+type Region struct {
+	CloudProviderRegion   string `json:"cloudProviderRegion"`
+	ISOCountryCodeA2      string `json:"isoCountryCodeA2"`      // +kubebuilder:validation:Optional
+	PhysicalLocation      string `json:"physicalLocation"`      // +kubebuilder:validation:Optional
+	ElectricityMapsRegion string `json:"electricityMapsRegion"` // +kubebuilder:validation:Optional
+	//Coordinates           Coordinates `json:"coordinates"`           // +kubebuilder:validation:Optional
+}
+
+type Coordinates struct {
+	Latitude  int `json:"latitude"`
+	Longitude int `json:"longitude"`
 }
 
 // WorkloadPlacementPolicyStatus defines the observed state of WorkloadPlacementPolicy.
 type WorkloadPlacementPolicyStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
+
+	EligibleRegions []Region `json:"eligibleRegions"`
 }
 
 // +kubebuilder:object:root=true

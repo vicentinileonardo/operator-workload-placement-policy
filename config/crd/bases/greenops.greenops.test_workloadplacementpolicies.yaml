@@ -1,0 +1,98 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.16.4
+  name: workloadplacementpolicies.greenops.greenops.test
+spec:
+  group: greenops.greenops.test
+  names:
+    kind: WorkloadPlacementPolicy
+    listKind: WorkloadPlacementPolicyList
+    plural: workloadplacementpolicies
+    singular: workloadplacementpolicy
+  scope: Namespaced
+  versions:
+  - name: v1
+    schema:
+      openAPIV3Schema:
+        description: WorkloadPlacementPolicy is the Schema for the workloadplacementpolicies
+          API.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: WorkloadPlacementPolicySpec defines the desired state of
+              WorkloadPlacementPolicy.
+            properties:
+              cloudProvider:
+                type: string
+              maxLatency:
+                type: integer
+              originRegion:
+                properties:
+                  cloudProviderRegion:
+                    type: string
+                  electricityMapsRegion:
+                    type: string
+                  isoCountryCodeA2:
+                    type: string
+                  physicalLocation:
+                    type: string
+                required:
+                - cloudProviderRegion
+                - electricityMapsRegion
+                - isoCountryCodeA2
+                - physicalLocation
+                type: object
+            required:
+            - cloudProvider
+            - maxLatency
+            - originRegion
+            type: object
+          status:
+            description: WorkloadPlacementPolicyStatus defines the observed state
+              of WorkloadPlacementPolicy.
+            properties:
+              eligibleRegions:
+                items:
+                  properties:
+                    cloudProviderRegion:
+                      type: string
+                    electricityMapsRegion:
+                      type: string
+                    isoCountryCodeA2:
+                      type: string
+                    physicalLocation:
+                      type: string
+                  required:
+                  - cloudProviderRegion
+                  - electricityMapsRegion
+                  - isoCountryCodeA2
+                  - physicalLocation
+                  type: object
+                type: array
+            required:
+            - eligibleRegions
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
