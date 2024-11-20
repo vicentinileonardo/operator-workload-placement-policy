@@ -1,5 +1,6 @@
 # operator-workload-placement-policy
 
+This repo was created in the context of my master's thesis. Currently in standby since another solution was chosen.
 
 ## To be checked 
 
